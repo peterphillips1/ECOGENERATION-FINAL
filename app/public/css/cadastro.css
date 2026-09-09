@@ -53,7 +53,7 @@ h1.ui.header {
 
 #cadastro-form input::placeholder,
 #cadastro-form textarea::placeholder {
-  color: #999; /* placeholder mais suave */
+  color: #667085;
 }
 
 /* Labels alinhados à esquerda, alinhados com os campos */
@@ -62,6 +62,7 @@ h1.ui.header {
   margin-left: calc(50% - 150px); /* para alinhar com input de 300px */
   margin-bottom: 5px;
   font-weight: bold;
+  color: #1f2937;
 }
 
 /* Mensagens de erro exibidas via atributo data-error no label (sem div) */

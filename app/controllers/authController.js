@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const { validationResult } = require('express-validator');
 const { usuariosModel } = require("../models/usuariosModel");
 const { criarToken, verificarToken, getBaseUrl } = require('../helpers/tokens');
-const { enviarEmail } = require('../services/emailService');
+const { enviarEmail, criarTemplateAtivacaoConta, criarTemplateResetSenha } = require('../services/emailService');
 
 // ===== CADASTRO =====
 exports.cadastroForm = (req, res) => {
@@ -34,12 +34,17 @@ exports.cadastroSubmit = async (req, res) => {
         });
         if (!resultado || !resultado.insertId) throw new Error('Usuário não foi criado');
         const token = criarToken({ id_usuario: resultado.insertId, tipo: 'ativacao' }, '24h');
-        const link = `${getBaseUrl()}/ativar-conta?token=${encodeURIComponent(token)}`;
+        const appBaseUrl = getBaseUrl();
+        const html = criarTemplateAtivacaoConta({
+            nomeUsuario: req.body.nome,
+            appBaseUrl,
+            token
+        });
         try {
             await enviarEmail({
                 para: req.body.email,
                 assunto: 'Ative sua conta EcoGeneration',
-                html: `<p>Olá, ${req.body.nome}!</p><p>Confirme seu cadastro pelo link:</p><p><a href="${link}">Ativar minha conta</a></p>`
+                html
             });
             req.session.flash = { status: 'success', text: 'Cadastro realizado! Verifique seu e-mail para ativar a conta.' };
         } catch (emailErro) {
@@ -147,11 +152,16 @@ exports.recuperarSenhaSubmit = async (req, res) => {
         }
 
         const token = criarToken({ id_usuario: usuarios[0].id_usuario, tipo: 'reset' }, '1h');
-        const link = `${getBaseUrl()}/resetar-senha?token=${encodeURIComponent(token)}`;
+        const appBaseUrl = getBaseUrl();
+        const html = criarTemplateResetSenha({
+            nomeUsuario: usuarios[0].nome_usuario,
+            appBaseUrl,
+            token
+        });
         await enviarEmail({
             para: email,
             assunto: 'Redefinição de senha EcoGeneration',
-            html: `<p>Solicitamos a redefinição da sua senha.</p><p><a href="${link}">Criar nova senha</a></p><p>O link expira em uma hora.</p>`
+            html
         });
 
         req.session.flash = { status: 'success', text: 'Enviamos um link de redefinição para o seu e-mail.' };

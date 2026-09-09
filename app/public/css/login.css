@@ -25,6 +25,7 @@ main h1 {
   max-width: 300px;
   margin: 0 auto 1rem;
   text-align: center;
+  color: #2f3f34;
 }
 
 
@@ -47,7 +48,7 @@ main h1 {
 
 .auth-form input::placeholder,
 .auth-form textarea::placeholder {
-  color: #999; /* placeholder mais suave */
+  color: #667085;
 }
 
 /* Labels alinhados à esquerda, alinhados com os campos */
@@ -56,6 +57,11 @@ main h1 {
   margin-left: calc(50% - 150px); /* para alinhar com input de 300px */
   margin-bottom: 5px;
   font-weight: bold;
+  color: #1f2937;
+}
+
+.auth-form p {
+  color: #2f3f34;
 }
 
 /* Mensagens de erro alinhadas igual os labels */
@@ -233,4 +239,4 @@ html[data-theme="dark"] main h1 {
   background-color: rgba(255, 107, 107, 0.1) !important;
   border-color: #ff6b6b !important;
   color: #ff6b6b !important;
-}
+}
