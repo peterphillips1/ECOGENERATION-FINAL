@@ -51,6 +51,18 @@ const usuariosModel = {
         }
     },
 
+    findPasswordById: async (id) => {
+        try {
+            const [resultado] = await pool.query(
+                "SELECT senha_usuario FROM usuarios WHERE id_usuario = ?",
+                [id]
+            );
+            return resultado[0] ? resultado[0].senha_usuario : null;
+        } catch (erro) {
+            return erro;
+        }
+    },
+
     updateStatus: async (id, status) => {
         const [resultado] = await pool.query(
             "UPDATE usuarios SET status_usuario = ? WHERE id_usuario = ?",

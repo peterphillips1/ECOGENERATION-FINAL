@@ -24,7 +24,7 @@
 .loja { color: #f57c00; }
 
 .ecoloja-subtitulo {
-  color: #666;
+  color: #374151;
   font-size: 1rem;
 }
 
@@ -133,7 +133,7 @@
 
 .produto-desc {
   font-size: 0.9rem;
-  color: #666;
+  color: #374151;
   flex: 1;
   margin-bottom: 1rem;
   line-height: 1.5;
@@ -184,7 +184,7 @@
 .sem-produtos {
   grid-column: 1 / -1;
   text-align: center;
-  color: #999;
+  color: #475569;
   padding: 3rem;
 }
 

@@ -63,7 +63,7 @@
 
 .endereco-via-cep,
 .campo-dica {
-  color: #666;
+  color: #374151;
   font-size: 0.85rem;
 }
 
@@ -74,7 +74,7 @@
 }
 
 .perfil-info p {
-  color: #666;
+  color: #374151;
   font-size: 0.95rem;
 }
 
@@ -154,7 +154,7 @@
 
 .compra-item-id {
   font-size: 0.8rem;
-  color: #999;
+  color: #475569;
   text-align: right;
 }
 
@@ -202,7 +202,7 @@
 
 .diagnostico-detalhes p {
   font-size: 0.85rem;
-  color: #555;
+  color: #374151;
   margin: 0;
 }
 
@@ -223,7 +223,7 @@
 
 /* SEM ITENS */
 .sem-itens {
-  color: #999;
+  color: #475569;
   text-align: center;
   padding: 1.5rem 0 0.5rem;
 }
@@ -255,7 +255,7 @@
 }
 
 .perfil-perigo p {
-  color: #666;
+  color: #374151;
   font-size: 0.95rem;
   margin-bottom: 1rem;
 }
@@ -304,7 +304,7 @@
 }
 
 .modal-box p {
-  color: #666;
+  color: #374151;
   margin-bottom: 1.5rem;
 }
 

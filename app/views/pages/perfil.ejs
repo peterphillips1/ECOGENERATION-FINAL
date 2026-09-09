@@ -80,9 +80,13 @@
           <label for="imagem">Imagem de perfil</label>
           <input id="imagem" name="imagem" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
           <img id="preview-imagem" class="perfil-preview" src="<%= usuario.imagem_perfil_usuario ? '/' + usuario.imagem_perfil_usuario : '/imagens/favicon2.png' %>" alt="Prévia da imagem de perfil">
-          <label for="senha">Nova senha (opcional)</label>
-          <input id="senha" name="senha" type="password" minlength="6" autocomplete="new-password">
-          <p class="campo-dica">Deixe em branco para manter a senha atual.</p>
+          <label for="senha_atual">Senha atual</label>
+          <input id="senha_atual" name="senha_atual" type="password" minlength="6" maxlength="72" autocomplete="current-password" placeholder="Digite sua senha atual">
+          <label for="senha">Nova senha</label>
+          <input id="senha" name="senha" type="password" minlength="6" maxlength="72" autocomplete="new-password" placeholder="Digite a nova senha">
+          <label for="confirmarSenha">Confirmar nova senha</label>
+          <input id="confirmarSenha" name="confirmarSenha" type="password" minlength="6" maxlength="72" autocomplete="new-password" placeholder="Confirme a nova senha">
+          <p class="campo-dica">Preencha apenas se quiser alterar a senha.</p>
           <button type="submit" class="btn-acao">Salvar alterações</button>
         </form>
       </section>

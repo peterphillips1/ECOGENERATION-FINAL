@@ -15,7 +15,7 @@
 
 .diagnostico-container p {
     text-align: center;
-    color: #666;
+    color: #374151;
     margin-bottom: 30px;
 }
 
@@ -75,7 +75,7 @@
 
 .checkbox-hint {
     margin: 0 0 10px;
-    color: #555;
+    color: #374151;
     font-size: 0.95rem;
 }
 
@@ -163,7 +163,7 @@
 }
 .progresso-texto {
   font-size: 12px;
-  color: #888;
+  color: #475569;
   display: block;
   margin-bottom: 8px;
 }
@@ -175,7 +175,7 @@
   border-radius: 0 8px 8px 0;
   padding: 10px 16px;
   font-size: 14px;
-  color: #444;
+  color: #1f2937;
   margin: 12px 0 0;
   text-align: left;
 }

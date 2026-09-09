@@ -1,3 +1,4 @@
+const bcrypt = require("bcryptjs");
 const { usuariosModel } = require("../models/usuariosModel");
 const { diagnosticosModel } = require("../models/diagnosticosModel");
 const { comprasModel } = require("../models/comprasModel");
@@ -45,25 +46,55 @@ exports.atualizarPerfil = async (req, res) => {
         const nome = String(req.body.nome || '').trim();
         const telefone = String(req.body.telefone || '').trim();
         const cep = String(req.body.cep || '').trim();
-        const senha = String(req.body.senha || '');
+        const senhaAtual = String(req.body.senha_atual || '').trim();
+        const senha = String(req.body.senha || '').trim();
+        const confirmarSenha = String(req.body.confirmarSenha || '').trim();
+
+        const desejaAlterarSenha = Boolean(senhaAtual || senha || confirmarSenha);
+        if (desejaAlterarSenha) {
+            if (!senhaAtual || !senha || !confirmarSenha) {
+                req.session.flash = { status: 'error', text: 'Para alterar a senha, informe a senha atual, a nova senha e a confirmação.' };
+                return res.redirect('/perfil');
+            }
+            if (senha.length < 6 || senha.length > 72) {
+                req.session.flash = { status: 'error', text: 'A nova senha deve ter entre 6 e 72 caracteres.' };
+                return res.redirect('/perfil');
+            }
+            if (senha !== confirmarSenha) {
+                req.session.flash = { status: 'error', text: 'A confirmação da nova senha não confere.' };
+                return res.redirect('/perfil');
+            }
+            const hashAtual = await usuariosModel.findPasswordById(id);
+            if (typeof hashAtual !== 'string' || !(await bcrypt.compare(senhaAtual, hashAtual))) {
+                req.session.flash = { status: 'error', text: 'Senha atual incorreta.' };
+                return res.redirect('/perfil');
+            }
+        }
+
         if (!nome || nome.length > 100 || (telefone && !/^\(\d{2}\)\s?\d{5}-\d{4}$/.test(telefone)) ||
-            (cep && !/^\d{5}-?\d{3}$/.test(cep)) || senha.length === 1 || (senha && senha.length < 6)) {
+            (cep && !/^\d{5}-?\d{3}$/.test(cep))) {
             req.session.flash = { status: 'error', text: 'Verifique os dados informados no perfil.' };
             return res.redirect('/perfil');
         }
+
         const usuarios = await usuariosModel.findById(id);
         if (!usuarios[0]) return res.redirect('/login');
         imagemAnterior = usuarios[0].imagem_perfil_usuario;
         const imagem = req.file ? `imagens/perfil/${req.file.filename}` : undefined;
-        await usuariosModel.update(id, {
+        const dadosAtualizacao = {
             nome,
             telefone: telefone || null,
             cep: cep || null,
             numero: String(req.body.numero || '').trim() || null,
             complemento: String(req.body.complemento || '').trim() || null,
-            senha,
             imagem
-        });
+        };
+
+        if (desejaAlterarSenha) {
+            dadosAtualizacao.senha = senha;
+        }
+
+        await usuariosModel.update(id, dadosAtualizacao);
         if (req.file && imagemAnterior && imagemAnterior.startsWith(`imagens/perfil/perfil_${id}_`)) {
             const antigo = path.basename(imagemAnterior);
             const caminho = path.join(perfilDir, antigo);
